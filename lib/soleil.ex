@@ -122,6 +122,24 @@ defmodule Soleil do
     GenServer.call(__MODULE__, :battery_info)
   end
 
+  @doc """
+  Reports the reason that the board woke from sleep.
+
+  Reasons for wakeup include:
+  - `:alarm`: when the RTC alarm triggers wakeup, such as after `sleep_for/2` or `sleep_until/1`
+  - `:manual`: when the pushbutton or hall sensor triggers wakeup
+
+  ## Examples
+
+      iex> Soleil.wakeup_reason()
+      :manual
+    
+  """
+  @spec wakeup_reason() :: :alarm | :manual
+  def wakeup_reason() do
+    GenServer.call(__MODULE__, :wakeup_reason)
+  end
+
   @doc ~S"""
   Updates the configuration of the BQ27427 battery fuel gauge chip.
 
@@ -154,11 +172,9 @@ defmodule Soleil do
     with {:ok, :fuel_gauge} <- {init_bq27427(state), :fuel_gauge},
          {true, :rtc_alarm_status} <- {MCP7940.alarm_flag?(i2c_ref), :rtc_alarm_status},
          {:ok, :rtc_clear_alarm} <- {MCP7940.clear_alarm(i2c_ref), :rtc_clear_alarm} do
-      Logger.warning("Wakeup reason was because MCP7940 alarm")
       {:ok, %{state | wakeup_reason: :alarm}}
     else
       {false, :rtc_alarm_status} ->
-        Logger.warning("Wakeup reason was NOT because of MCP7940 alarm")
         {:ok, state}
 
       {error, step} ->
@@ -175,6 +191,10 @@ defmodule Soleil do
     state = Map.merge(state, battery_opts)
 
     {:reply, init_bq27427(state, force: true), state}
+  end
+
+  def handle_call(:wakeup_reason, _from, state) do
+    {:reply, state.wakeup_reason, state}
   end
 
   def handle_call(:power_off, _from, state) do

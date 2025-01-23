@@ -3,6 +3,7 @@ defmodule Soleil.MixProject do
 
   @version "0.1.0"
   @source_url "https://github.com/protolux-electronics/soleil"
+  @homepage_url "https://protolux.io/projects/soleil"
 
   def project do
     [
@@ -12,7 +13,9 @@ defmodule Soleil.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       description: description(),
-      source_url: @source_url
+      source_url: @source_url,
+      homepage_url: @homepage_url,
+      docs: &docs/0
     ]
   end
 
@@ -32,8 +35,21 @@ defmodule Soleil.MixProject do
     [
       {:circuits_i2c, "~> 1.0 or ~> 0.3.6 or ~> 2.0"},
       {:nerves_time, "~> 0.4.0"},
-      {:ex_doc, "~> 0.19", only: :docs, runtime: false},
-      {:dialyxir, "~> 1.4", only: :dev, runtime: false}
+      {:dialyxir, "~> 1.4", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.34", only: :dev, runtime: false}
+    ]
+  end
+
+  defp docs do
+    [
+      # The main page in the docs
+      main: "introduction",
+      extra_section: "GUIDES",
+      extras: [
+        "guides/introduction.md",
+        "guides/getting_started.md",
+        "guides/technical_overview.md"
+      ]
     ]
   end
 end

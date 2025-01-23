@@ -1,10 +1,11 @@
 defmodule Soleil do
   @moduledoc ~S"""
-  Soleil: A library for managing power of an IoT device with the Soleil board.
+  The official support library for the [Soleil](https://protolux.io/soleil) power
+  management and sleep control board for Raspberry Pi.
 
   This library provides functions for managing device power, scheduling sleep 
-  durations or wake times, and reading battery information. It is designed to 
-  abstract low-level hardware interactions, providing a clean and intuitive API 
+  durations and wake times, as well as reading battery information. It is designed 
+  to abstract low-level hardware interactions, providing a clean and intuitive API 
   for developers.
   """
 
@@ -143,7 +144,7 @@ defmodule Soleil do
   @doc ~S"""
   Updates the configuration of the BQ27427 battery fuel gauge chip.
 
-  Accepts the same parameters as start_link/1.
+  Accepts the same parameters as `start_link/1`.
 
   ## Examples
 

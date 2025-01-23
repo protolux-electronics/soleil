@@ -1,7 +1,7 @@
 defmodule Soleil.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.1.1"
   @source_url "https://github.com/protolux-electronics/soleil"
   @homepage_url "https://protolux.io/projects/soleil"
 
@@ -15,7 +15,8 @@ defmodule Soleil.MixProject do
       description: description(),
       source_url: @source_url,
       homepage_url: @homepage_url,
-      docs: &docs/0
+      docs: docs(),
+      package: package()
     ]
   end
 
@@ -50,6 +51,22 @@ defmodule Soleil.MixProject do
         "guides/getting_started.md",
         "guides/technical_overview.md"
       ]
+    ]
+  end
+
+  defp package do
+    [
+      files: [
+        "lib",
+        "LICENSE",
+        "mix.exs",
+        "README.md"
+      ],
+      licenses: ["MIT"],
+      links: %{
+        "Home page" => "https://protolux.io/soleil",
+        "GitHub" => @source_url
+      }
     ]
   end
 end

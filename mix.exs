@@ -36,6 +36,7 @@ defmodule Soleil.MixProject do
     [
       {:circuits_i2c, "~> 1.0 or ~> 0.3.6 or ~> 2.0"},
       {:nerves_time, "~> 0.4.0"},
+      {:nerves_hub_link, "~> 2.7", optional: true},
       {:dialyxir, "~> 1.4", only: :dev, runtime: false},
       {:ex_doc, "~> 0.34", only: :dev, runtime: false}
     ]
